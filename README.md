@@ -8,7 +8,7 @@ Then edit the App.config file in the Test project and you can run the tests.
 * GetHeroes
 * GetMatchHistory
 * GetMatchDetails
-* GetleagueListings
+* GetLeagueListings
 * GetLiveLeagueGames
 * GetTeamInfoById
 * GetTournamentPrizePool
@@ -17,8 +17,8 @@ Then edit the App.config file in the Test project and you can run the tests.
 
 
 ##additional methods
-* GetHeroPortrait - Will return a byte[] of an .png or .jpg image depending on choices
-* GetItemIcon - Will return a byte[] of an .png image
+* GetHeroPortrait - Will return a byte[] of a .png or .jpg image depending on choices
+* GetItemIcon - Will return a byte[] of a .png image
 
 
 
