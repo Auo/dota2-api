@@ -8,7 +8,7 @@
 *.sln.docstates
 
 #Config removal
-Dota2Api.Test/App.config
+Dota2Api.Test/App.prod.config
 #Visual studio test
 /TestResults
 
