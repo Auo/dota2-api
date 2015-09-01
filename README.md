@@ -15,21 +15,19 @@ Then edit the App.config file in the Test project and you can run the tests.
 * GetPlayerSummary 
 
 
-
-##additional methods
-* GetHeroPortrait - Will return a byte[] of a .png or .jpg image depending on choices
+## additional methods
+These two methods will call the Steam CDN for images and download them.
+* GetHeroPortrait - Will return a byte[] of a .png or .jpg image depending on choices.
 * GetItemIcon - Will return a byte[] of a .png image
 
 
-
+## usage 
 Import the namespace
-
 ````csharp
 using Dota2Api
 ````
 
 Then use the class! 
-
 ````csharp
   using (ApiHandler handler = new ApiHandler("API-KEY-HERE"))
   {
@@ -37,6 +35,10 @@ Then use the class!
   }
 ````
 
+### work left
+Some restructuring and renaming might be good
+* Extract HTTP methods from ApiHandler
+* Extract QueryBuilder from ApiHandler
 
 
 
