@@ -17,7 +17,7 @@ namespace Dota2Api.ApiClasses
         private int _spectators;
         private string _towerState;
         private int _leagueId;
-        private int _streamDelaySeconds;
+        private double _streamDelaySeconds;
         private int _radiant_series_wins;
         private int _direSeriesWins;
         private int _seriesType;
@@ -63,7 +63,7 @@ namespace Dota2Api.ApiClasses
         }
 
         [JsonProperty("stream_delay_s")]
-        public int StreamDelaySeconds
+        public double StreamDelaySeconds
         {
             get { return _streamDelaySeconds; }
             set { _streamDelaySeconds = value; }
@@ -124,20 +124,5 @@ namespace Dota2Api.ApiClasses
             get { return _radiantTeam; }
             set { _radiantTeam = value; }
         }
-        
-
-
-        //"radiant_team": {
-        //            "team_name": "Fazed Out Clan",
-        //            "team_id": 1913948,
-        //            "team_logo": 27344091458948459,
-        //            "complete": false
-        //        },
-        //        "dire_team": {
-        //            "team_name": "America's Most Noided",
-        //            "team_id": 1561522,
-        //            "team_logo": 79128516942492739,
-        //            "complete": false
-        //        },
     }
 }
