@@ -16,6 +16,7 @@ namespace Dota2Api.Converters
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             string value = reader.Value.ToString();
+            Uri uri;
 
             if (string.IsNullOrEmpty(value))
                 return null;
@@ -23,8 +24,9 @@ namespace Dota2Api.Converters
             if (!value.StartsWith("http://"))
                 value = "http://" + value;
 
+            Uri.TryCreate(value, UriKind.Absolute, out uri);
 
-            return new Uri(value);
+            return uri;
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
