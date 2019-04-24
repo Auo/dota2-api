@@ -1,4 +1,6 @@
 # dota2-api
+**Currently not maintained** 
+
 a C# wrapper for the Dota 2 api, it's a portable class library (pcl).
 
 To get this working, you need an [API key from valve](http://steamcommunity.com/dev/apikey).
