@@ -19,8 +19,8 @@ Then edit the App.config file in the Test project and you can run the tests.
 
 ## additional methods
 These two methods will call the Steam CDN for images and download them.
-* GetHeroPortrait - Will return a byte[] of a .png or .jpg image depending on choices.
-* GetItemIcon - Will return a byte[] of a .png image
+* GetHeroPortrait - Will return a `byte[]` of a .png or .jpg image depending on choices.
+* GetItemIcon - Will return a `byte[]` of a .png image
 
 
 ## usage 
@@ -41,6 +41,3 @@ Then use the class!
 Some restructuring and renaming might be good
 * Extract HTTP methods from ApiHandler
 * Extract QueryBuilder from ApiHandler
-
-
-
