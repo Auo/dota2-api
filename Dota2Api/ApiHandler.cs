@@ -17,13 +17,13 @@ namespace Dota2Api
     public class ApiHandler : IDisposable
     {
         #region Private
-        private bool _disposed = false;
-        private string _key;
+        private bool disposed = false;
+        private readonly string apiKey;
         private const string BASE_ADDRESS = "https://api.steampowered.com/";
         private const string BASE_ADDRESS_CDN = "http://cdn.dota2.com/";
-        private string _keyString
+        private string KeyString
         {
-            get { return "?key=" + _key; }
+            get { return "?key=" + apiKey; }
         }
         protected HttpClient _client;
         #endregion
@@ -34,66 +34,66 @@ namespace Dota2Api
             if (string.IsNullOrEmpty(key))
                 throw new InvalidApiKeyException("Missing API-key");
 
-            _key = key;
+            apiKey = key;
 
             _client = new HttpClient();
         }
         #endregion
 
         #region Public Methods
-        public async Task<GetTeamInfoResult> GetTeamInfoByTeamId(int startAtTeamId = -1, int teamsRequested = -1)
-        {
-            try
-            {
-                StringBuilder extra = new StringBuilder();
+        //public async Task<GetTeamInfoResult> GetTeamInfoByTeamId(int startAtTeamId = -1, int teamsRequested = -1)
+        //{
+        //    try
+        //    {
+        //        StringBuilder extra = new StringBuilder();
 
-                if (startAtTeamId != -1)
-                    extra.AppendFormat("{0}{1}", "&start_at_team_id=", startAtTeamId);
+        //        if (startAtTeamId != -1)
+        //            extra.AppendFormat("{0}{1}", "&start_at_team_id=", startAtTeamId);
 
-                if (teamsRequested != -1)
-                    extra.AppendFormat("{0}{1}", "&teams_requested=", teamsRequested);
+        //        if (teamsRequested != -1)
+        //            extra.AppendFormat("{0}{1}", "&teams_requested=", teamsRequested);
 
-                string query = QueryBuilder(BASE_ADDRESS, "IDOTA2Match_570/GetTeamInfoByTeamID/v001/", _keyString, extra.ToString());
+        //        string query = QueryBuilder(BASE_ADDRESS, "IDOTA2Match_570/GetTeamInfoByTeamID/v001/", _keyString, extra.ToString());
 
-                string content = await GetStringAsync(query);
-                var apiResult = JsonConvert.DeserializeObject<ApiResult<GetTeamInfoResult>>(content);
+        //        string content = await GetStringAsync(query);
+        //        var apiResult = JsonConvert.DeserializeObject<ApiResult<GetTeamInfoResult>>(content);
 
-                JObject dynamicContent = JObject.Parse(content);
-                IEnumerable<JToken> teams = dynamicContent.Values().First()["teams"].Children();
+        //        JObject dynamicContent = JObject.Parse(content);
+        //        IEnumerable<JToken> teams = dynamicContent.Values().First()["teams"].Children();
 
-                string playerStart = "player_";
-                string leagueStart = "league_id";
+        //        string playerStart = "player_";
+        //        string leagueStart = "league_id";
 
-                foreach (JObject team in teams)
-                {
-                    int teamId = team["team_id"].Value<int>();
+        //        foreach (JObject team in teams)
+        //        {
+        //            int teamId = team["team_id"].Value<int>();
 
-                    Team currentTeam = apiResult.Result.Teams.FirstOrDefault(q => q.TeamId == teamId);
-                    currentTeam.PlayerAccountIds = new List<long>();
-                    currentTeam.LeagueIds = new List<long>();
+        //            Team currentTeam = apiResult.Result.Teams.FirstOrDefault(q => q.TeamId == teamId);
+        //            currentTeam.PlayerAccountIds = new List<long>();
+        //            currentTeam.LeagueIds = new List<long>();
 
-                    foreach (var property in team.Properties().Where(prop => prop.Name.StartsWith(playerStart) || prop.Name.StartsWith(leagueStart)))
-                    {
-                        if (property.Name.StartsWith(playerStart))
-                            currentTeam.PlayerAccountIds.Add(property.Value.Value<long>());
+        //            foreach (var property in team.Properties().Where(prop => prop.Name.StartsWith(playerStart) || prop.Name.StartsWith(leagueStart)))
+        //            {
+        //                if (property.Name.StartsWith(playerStart))
+        //                    currentTeam.PlayerAccountIds.Add(property.Value.Value<long>());
 
-                        if (property.Name.StartsWith(leagueStart))
-                            currentTeam.LeagueIds.Add(property.Value.Value<long>());
-                    }
-                }
-                return apiResult.Result;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
+        //                if (property.Name.StartsWith(leagueStart))
+        //                    currentTeam.LeagueIds.Add(property.Value.Value<long>());
+        //            }
+        //        }
+        //        return apiResult.Result;
+        //    }
+        //    catch (Exception)
+        //    {
+        //        throw;
+        //    }
+        //}
 
         public async Task<LiveLeagueGamesResult> GetLiveLeagueGames()
         {
             try
             {
-                string content = await GetStringAsync(BASE_ADDRESS + "IDOTA2Match_570/GetLiveLeagueGames/v0001/" + _keyString);
+                string content = await GetStringAsync(BASE_ADDRESS + "IDOTA2Match_570/GetLiveLeagueGames/v0001/" + KeyString);
                 var apiResult = JsonConvert.DeserializeObject<ApiResult<LiveLeagueGamesResult>>(content);
 
                 return apiResult.Result;
@@ -108,7 +108,7 @@ namespace Dota2Api
         {
             try
             {
-                string content = await GetStringAsync(BASE_ADDRESS + "IDOTA2Match_570/GetLeagueListing/v0001/" + _keyString);
+                string content = await GetStringAsync(BASE_ADDRESS + "IDOTA2Match_205790/GetLeagueListing/v0001/" + KeyString);
                 var apiResult = JsonConvert.DeserializeObject<ApiResult<LeagueListingResult>>(content);
 
                 return apiResult.Result;
@@ -132,7 +132,7 @@ namespace Dota2Api
                     throw new MissingAccountIdException("Atleast one accountId must be specified");
 
                 string ids = accountIds.Aggregate((current, next) => current + "," + next);
-                string queryString = QueryBuilder(BASE_ADDRESS, "ISteamUser/GetPlayerSummaries/v0002/", _keyString, "&steamids=", ids);
+                string queryString = QueryBuilder(BASE_ADDRESS, "ISteamUser/GetPlayerSummaries/v0002/", KeyString, "&steamids=", ids);
 
                 string content = await GetStringAsync(queryString);
                 var apiResult = JsonConvert.DeserializeObject<ApiResult<SteamPlayerSummaryResult>>(content);
@@ -149,7 +149,7 @@ namespace Dota2Api
         {
             try
             {
-                string queryString = QueryBuilder(BASE_ADDRESS, "IEconDOTA2_570/GetHeroes/v0001/", _keyString);
+                string queryString = QueryBuilder(BASE_ADDRESS, "IEconDOTA2_570/GetHeroes/v0001/", KeyString);
                 string content = await GetStringAsync(queryString);
                 var apiResult = JsonConvert.DeserializeObject<ApiResult<HeroResult>>(content);
                 return apiResult.Result;
@@ -247,7 +247,7 @@ namespace Dota2Api
                 if (tournamentGamesOnly)
                     extra.AppendFormat("{0}{1}", "&tournament_games_only=", tournamentGamesOnly);
 
-                string queryString = QueryBuilder(BASE_ADDRESS, "IDOTA2Match_570/GetMatchHistory/V001/", _keyString, extra.ToString());
+                string queryString = QueryBuilder(BASE_ADDRESS, "IDOTA2Match_570/GetMatchHistory/V001/", KeyString, extra.ToString());
 
                 string content = await GetStringAsync(queryString);
 
@@ -268,7 +268,7 @@ namespace Dota2Api
         {
             try
             {
-                string queryString = QueryBuilder(BASE_ADDRESS, "IDOTA2Match_570/GetMatchDetails/V001/", _keyString, "&match_id=", matchId);
+                string queryString = QueryBuilder(BASE_ADDRESS, "IDOTA2Match_570/GetMatchDetails/V001/", KeyString, "&match_id=", matchId);
                 string content = await GetStringAsync(queryString);
 
                 var apiResult = JsonConvert.DeserializeObject<ApiResult<DetailedMatch>>(content);
@@ -309,7 +309,7 @@ namespace Dota2Api
                     extra.AppendFormat("{0}{1}", "&leagueid=", leagueId);
 
 
-                string queryString = QueryBuilder(BASE_ADDRESS, "IEconDOTA2_570/GetTournamentPrizePool/v1/", _keyString, extra.ToString());
+                string queryString = QueryBuilder(BASE_ADDRESS, "IEconDOTA2_570/GetTournamentPrizePool/v1/", KeyString, extra.ToString());
 
 
 
@@ -337,7 +337,7 @@ namespace Dota2Api
                 if (matchesRequested != -1)
                     extra.AppendFormat("{0}{1}", "&matches_requested=", matchesRequested);
 
-                string queryString = QueryBuilder(BASE_ADDRESS, "IDOTA2Match_570/GetMatchHistoryBySequenceNum/v0001/", _keyString, extra.ToString());
+                string queryString = QueryBuilder(BASE_ADDRESS, "IDOTA2Match_570/GetMatchHistoryBySequenceNum/v0001/", KeyString, extra.ToString());
                 string content = await GetStringAsync(queryString);
 
                 var apiResult = JsonConvert.DeserializeObject<ApiResult<GetMatchHistoryBySequenceNumResult>>(content);
@@ -433,7 +433,7 @@ namespace Dota2Api
 
         protected virtual void Dispose(bool disposing)
         {
-            if (_disposed)
+            if (disposed)
                 return;
 
             if (disposing)
@@ -441,7 +441,7 @@ namespace Dota2Api
                 _client.Dispose();
             }
 
-            _disposed = true;
+            disposed = true;
         }
         #endregion
     }

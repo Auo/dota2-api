@@ -1,18 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29009.5
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dota2Api", "Dota2Api\Dota2Api.csproj", "{28B291EC-3EEA-4AFB-A48A-449C6DDE8E41}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dota2Api", "Dota2Api\Dota2Api.csproj", "{28B291EC-3EEA-4AFB-A48A-449C6DDE8E41}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dota2Api.Test", "Dota2Api.Test\Dota2Api.Test.csproj", "{5BA5F6FB-C009-4232-999B-8F8D9F23134F}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{90BED56E-219B-414D-BF30-B1049BB879E4}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
-	EndProjectSection
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dota2Api.Test", "Dota2Api.Test\Dota2Api.Test.csproj", "{53B46C87-9BA1-4EE2-8891-73CCEFD739AE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,12 +17,15 @@ Global
 		{28B291EC-3EEA-4AFB-A48A-449C6DDE8E41}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28B291EC-3EEA-4AFB-A48A-449C6DDE8E41}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28B291EC-3EEA-4AFB-A48A-449C6DDE8E41}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5BA5F6FB-C009-4232-999B-8F8D9F23134F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5BA5F6FB-C009-4232-999B-8F8D9F23134F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5BA5F6FB-C009-4232-999B-8F8D9F23134F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5BA5F6FB-C009-4232-999B-8F8D9F23134F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53B46C87-9BA1-4EE2-8891-73CCEFD739AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53B46C87-9BA1-4EE2-8891-73CCEFD739AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53B46C87-9BA1-4EE2-8891-73CCEFD739AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53B46C87-9BA1-4EE2-8891-73CCEFD739AE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {88319470-4C1B-4439-88F6-5B4B37E79A72}
 	EndGlobalSection
 EndGlobal
